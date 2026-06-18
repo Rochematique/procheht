@@ -20,11 +20,9 @@ jobs:
       #     chmod 600 ~/.ssh/deploy_key
       #     ssh-keyscan -p ${{ secrets.PROXMOX_PORT }} ${{ secrets.PROXMOX_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy to staging
+      - name: Deploy
         run: |
-             cd /home/pmatique/backend
-             git pull origin dev
-             docker build -t procheht-backend .
-             docker stop procheht-app || true
-             docker rm procheht-app || true
-             docker run -d -p 5000:5000 --restart unless-stopped --name procheht-app procheht-backend
+            docker build -t procheht-backend ./backend
+            docker stop procheht-app || true
+            docker rm procheht-app || true
+            docker run -d -p 5000:5000 --restart unless-stopped --name procheht-app procheht-backend
