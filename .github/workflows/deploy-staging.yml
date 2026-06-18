@@ -7,27 +7,24 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p ${{ secrets.PROXMOX_PORT }} ${{ secrets.PROXMOX_HOST }} >> ~/.ssh/known_hosts
+      # - name: Set up SSH
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+      #     chmod 600 ~/.ssh/deploy_key
+      #     ssh-keyscan -p ${{ secrets.PROXMOX_PORT }} ${{ secrets.PROXMOX_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to staging
         run: |
-          ssh -i ~/.ssh/deploy_key \
-            -p ${{ secrets.PROXMOX_PORT }} \
-            ${{ secrets.PROXMOX_USER }}@${{ secrets.PROXMOX_HOST }} \
-            "cd /home/pmatique/backend && \
-             git pull origin dev && \
-             docker build -t procheht-backend . && \
-             docker stop procheht-app && \
-             docker rm procheht-app && \
-             docker run -d -p 5000:5000 --restart unless-stopped --name procheht-app procheht-backend"
+             cd /home/pmatique/backend
+             git pull origin dev
+             docker build -t procheht-backend .
+             docker stop procheht-app || true
+             docker rm procheht-app || true
+             docker run -d -p 5000:5000 --restart unless-stopped --name procheht-app procheht-backend
