@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,34 +7,98 @@
 }
 
 body {
-  font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  background-color: #020c1b;
+  color: #ccd6f6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Animated grid background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(0, 188, 212, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 188, 212, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gridMove {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(50px); }
 }
 
 header {
+  position: relative;
   text-align: center;
-  padding: 80px 20px 40px;
+  padding: 100px 20px 60px;
+  z-index: 1;
+}
+
+header::after {
+  content: '';
+  display: block;
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #00bcd4, transparent);
+  margin: 30px auto 0;
 }
 
 header h1 {
-  font-size: 3rem;
-  color: #00bcd4;
+  font-family: 'Orbitron', monospace;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  text-shadow:
+    0 0 10px rgba(0, 188, 212, 0.8),
+    0 0 30px rgba(0, 188, 212, 0.4),
+    0 0 60px rgba(0, 188, 212, 0.2);
 }
 
 header p {
-  margin-top: 10px;
-  font-size: 1.2rem;
-  color: #d0d0d0;
+  margin-top: 15px;
+  font-size: 1.1rem;
+  color: #64ffda;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+main {
+  flex: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .apps {
-  flex: 1;
-  padding: 50px;
+  padding: 20px 50px 60px;
   text-align: center;
+}
+
+.apps h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #00bcd4;
+  margin-bottom: 40px;
+}
+
+.apps h2::before {
+  content: '// ';
+  color: #64ffda;
 }
 
 .app-grid {
@@ -40,40 +106,92 @@ header p {
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .app-card {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 30px;
+  background: rgba(2, 12, 27, 0.8);
+  border: 1px solid rgba(0, 188, 212, 0.2);
+  border-radius: 4px;
+  padding: 35px 30px;
   width: 300px;
   backdrop-filter: blur(10px);
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  text-align: left;
+}
+
+.app-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #00bcd4, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .app-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-8px);
+  border-color: rgba(0, 188, 212, 0.6);
+  box-shadow:
+    0 0 20px rgba(0, 188, 212, 0.1),
+    0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.app-card:hover::before {
+  opacity: 1;
+}
+
+.app-card h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ccd6f6;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.app-card p {
+  font-size: 0.95rem;
+  color: #8892b0;
+  line-height: 1.6;
+  font-weight: 300;
 }
 
 .btn {
   display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: #00bcd4;
-  color: white;
-  border-radius: 8px;
+  margin-top: 20px;
+  padding: 10px 24px;
+  background: transparent;
+  color: #00bcd4;
+  border: 1px solid #00bcd4;
+  border-radius: 2px;
   text-decoration: none;
-  transition: 0.2s;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
 }
 
 .btn:hover {
-  background: #0097a7;
+  background: rgba(0, 188, 212, 0.1);
+  box-shadow: 0 0 15px rgba(0, 188, 212, 0.3);
+  color: #fff;
 }
 
 footer {
+  position: relative;
   text-align: center;
-  padding: 20px;
-  font-size: 0.9rem;
-  color: #ccc;
+  padding: 25px;
+  font-size: 0.75rem;
+  color: #4a5568;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  z-index: 1;
+  border-top: 1px solid rgba(0, 188, 212, 0.1);
 }
