@@ -22,8 +22,6 @@ jobs:
 
       - name: Deploy to staging
         run: |
-          cd /home/pmatique/backend
-          git pull origin dev
           docker build -t procheht-backend .
           docker stop procheht-app || true
           docker rm procheht-app || true
