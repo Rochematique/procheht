@@ -22,7 +22,7 @@ jobs:
 
       - name: Deploy to staging
         run: |
-          docker build -t procheht-backend .
+          docker build -t procheht-backend ./backend
           docker stop procheht-app || true
           docker rm procheht-app || true
           docker run -d -p 5000:5000 --restart unless-stopped --name procheht-app procheht-backend
